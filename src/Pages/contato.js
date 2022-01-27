@@ -6,6 +6,7 @@ const Contatos = () => {
   const [message, setMessage] =useState([]);
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
+  const [validator, setValidator] = useState(false)
 
   useEffect(async () => {
     const res = await fetch('http://localhost:5000/message');
@@ -13,13 +14,24 @@ const Contatos = () => {
     setMessage(data)
   }, [])
   
+  const sendMessage = () => {
+    if(author.length <= 0 || content.length <= 0) {
+      return setValidator(!validator)
+    }
+    console.log(content)
+  }
   return(
     <>
       <Grid container direction="row" xs={12}>
         <TextField id="name" label="Name" value={author} onChange={(event) => {setAuthor(event.target.value)}} fullWidth />
         <TextField id="message" label="Message" value={content} onChange={(event) => {setContent(event.target.value)}} fullWidth />
       </Grid>
-      <Button className="mt-4" variant="contained" color="primary">
+      {validator && <div className="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Please, Fill in all the fields</strong>
+        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div> }
+      
+      <Button onClick={sendMessage} className="mt-4" variant="contained" color="primary">
         Sent
       </Button>
       {message.map((content) => {
