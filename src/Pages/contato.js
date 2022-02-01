@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Grid, Button, TextField } from '@material-ui/core/';
 
 const Contatos = () => {
+  const Url = 'http://localhost:5000/message'
   const [message, setMessage] =useState([]);
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
@@ -15,9 +16,22 @@ const Contatos = () => {
   }, [])
   
   const sendMessage = () => {
+    setValidator(false)
     if(author.length <= 0 || content.length <= 0) {
       return setValidator(!validator)
     }
+
+    const bodyForm = {
+      email: author,
+      message: content
+    }
+    fetch(Url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bodyForm)
+    })
     console.log(content)
   }
   return(
