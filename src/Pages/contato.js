@@ -8,6 +8,7 @@ const Contatos = () => {
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
   const [validator, setValidator] = useState(false)
+  const [render, setRender] = useState(false)
 
   useEffect(async () => {
     const res = await fetch('http://localhost:5000/message');
@@ -31,11 +32,11 @@ const Contatos = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(bodyForm)
-    })
+    }).then((res) => res.json()).then(console.log((data) => console.log(data)))
 
     setAuthor('')
     setContent('')
-    
+
     console.log(content)
   }
   return(
