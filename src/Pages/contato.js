@@ -32,6 +32,10 @@ const Contatos = () => {
       },
       body: JSON.stringify(bodyForm)
     })
+
+    setAuthor('')
+    setContent('')
+    
     console.log(content)
   }
   return(
